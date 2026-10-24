@@ -811,10 +811,11 @@ tr.month td.sub{color:var(--ink-2)}
         const age=(last-t)/D; const r=R();
         const status=age<4&&r<.5?'closing__init':(age<10&&r<.35?'closing__all_signed':(r<.04?'closing__init':'oversee__init'));
         const h=status==='closing__init'?'':t+Math.floor(R()*3)*D;
-        const tr=status==='oversee__init'||(status==='closing__all_signed'&&R()<.4)?(h||t)+(1+Math.floor(R()*4))*D:'';
-        let pg=status==='oversee__init'?tr+Math.floor(R()*R()*45)*D:'';if(pg&&pg>NOW())pg=NOW();
+        let tr=status==='oversee__init'||(status==='closing__all_signed'&&R()<.4)?(h||t)+(1+Math.floor(R()*4))*D:'';if(tr&&tr>NOW())tr=Math.max(h||t,NOW()-D);
+        let pg=status==='oversee__init'&&tr?tr+Math.floor(R()*R()*40)*D:'';if(pg&&pg>NOW())pg=Math.max(tr,NOW());
+        const fim=t+30*D;
         const v=FC?Math.max(300,(FC[i]||0)/tot*(0.6+0.8*R())):3000+R()*9000;
-        ROWS.push([String(30000000+(++n)*7919%69999999),pick(FUNDOS),P[j]||P[0],'Plataforma',status,iso(t-(2+Math.floor(R()*40))*D),iso(t),tr?iso(tr):'',pg?iso(pg):'','',30,Math.round(v*100)/100,Math.round(v*(6+8*R())),'canceled',pick(GR),h?iso(h):'']);
+        ROWS.push([String(30000000+(++n)*7919%69999999),pick(FUNDOS),P[j]||P[0],'Plataforma',status,iso(t-(2+Math.floor(R()*40))*D),iso(t),tr?iso(tr):'',pg?iso(pg):'',iso(fim),30,Math.round(v*100)/100,Math.round(v*(6+8*R())),'canceled',pick(GR),h?iso(h):'']);
       }})});
     return ROWS;
   }
